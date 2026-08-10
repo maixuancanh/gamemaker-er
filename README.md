@@ -14,7 +14,9 @@ Independent Solana Blitz V7 submission for real-time social duel proof with Magi
 
 - ER endpoint: `https://devnet.magicblock.app`
 - Solana devnet endpoint: `https://api.devnet.solana.com`
-- Proof format: signed memo transactions for the MVP.
+- Custom program ID: `41ZSUWJzg7KHxUeNkaZBDQBQSU3xhnwmiEy2k7WMLTYr`
+- Deploy tx: `rhrXaAMTxMonhfRV8p9UN8gFVFpf7i5xfCLECG94Zv162kMMQ4ZRL5GgtXwUrZZf7gMu4er6s3sazoT343KWe1m`
+- Proof format: wallet-signed custom program instructions carrying move, verdict, and settle payloads.
 
 ## Local Development
 
