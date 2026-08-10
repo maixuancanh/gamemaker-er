@@ -39,12 +39,15 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0d1018] text-white">
-      <section className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 gap-6 px-5 py-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
-        <div className="flex flex-col justify-between rounded-xl border border-white/10 bg-[#151a28] p-6">
+    <main className="relative min-h-screen overflow-hidden bg-[#0d1018] text-white">
+      <div className="arena-grid pointer-events-none absolute inset-0 opacity-70" />
+      <div className="pointer-events-none absolute -right-24 top-16 h-80 w-80 rounded-full bg-red-500/20 blur-3xl" />
+      <div className="pointer-events-none absolute -left-20 bottom-16 h-72 w-72 rounded-full bg-amber-400/15 blur-3xl" />
+      <section className="relative mx-auto grid min-h-screen max-w-7xl grid-cols-1 gap-6 px-5 py-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+        <div className="blade-sheen flex flex-col justify-between rounded-xl border border-white/10 bg-[#151a28]/95 p-6 shadow-2xl shadow-black/40">
           <nav className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Image src="/brand-logo.png" alt="Gamemaker ER logo" width={48} height={48} className="h-12 w-12 rounded-lg object-cover" priority />
+              <Image src="/brand-logo.png" alt="Gamemaker ER logo" width={48} height={48} className="arena-float h-12 w-12 rounded-lg object-cover ring-1 ring-red-300/50" priority />
               <div><p className="text-sm font-semibold uppercase tracking-[0.22em] text-red-200">Gamemaker ER</p><p className="text-xs text-slate-400">Real-time duel arena</p></div>
             </div>
             <a href="/judge" className="text-sm text-slate-300 hover:text-white">Judge</a>
@@ -56,7 +59,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-3 gap-3 text-sm">{["Move hash", "Referee hash", "Result proof"].map((x) => <div key={x} className="rounded-lg border border-white/10 bg-white/[0.05] p-4"><Flame className="mb-3 h-5 w-5 text-red-300" /><p>{x}</p></div>)}</div>
         </div>
-        <div className="rounded-xl border border-white/10 bg-[#111521] p-5 shadow-xl shadow-black/20">
+        <div className="rounded-xl border border-white/10 bg-[#111521]/95 p-5 shadow-xl shadow-black/20 backdrop-blur">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
             <div><h2 className="text-2xl font-semibold">Duel Arena</h2><p className="text-sm text-slate-400">Commit a move, log a transparent verdict, and settle the match.</p></div>
             <button onClick={onConnect} className="inline-flex h-11 items-center gap-2 rounded-lg bg-white px-4 text-sm font-semibold text-black hover:bg-red-200">{busy === "connect" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wallet className="h-4 w-4" />}{wallet ? shortKey(wallet) : "Connect Wallet"}</button>
@@ -69,13 +72,13 @@ export default function Home() {
             </div>
             <label className="grid gap-2"><span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Player move</span><textarea value={move} onChange={(e) => setMove(e.target.value)} className="min-h-24 rounded-lg border border-white/10 bg-black/20 p-4 outline-none focus:border-red-300" /></label>
             <label className="grid gap-2"><span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Referee verdict</span><textarea value={verdict} onChange={(e) => setVerdict(e.target.value)} className="min-h-24 rounded-lg border border-white/10 bg-black/20 p-4 outline-none focus:border-red-300" /></label>
-            <div className="grid gap-3 rounded-lg border border-white/10 bg-black/20 p-4 sm:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.18em] text-slate-500">Move hash</p><p className="mt-2 break-all font-mono text-xs text-red-200">{moveHash}</p></div><div><p className="text-xs uppercase tracking-[0.18em] text-slate-500">Verdict hash</p><p className="mt-2 break-all font-mono text-xs text-red-200">{verdictHash}</p></div></div>
+            <div className="ember grid gap-3 rounded-lg border border-white/10 bg-black/20 p-4 sm:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.18em] text-slate-500">Move hash</p><p className="mt-2 break-all font-mono text-xs text-red-200">{moveHash}</p></div><div><p className="text-xs uppercase tracking-[0.18em] text-slate-500">Verdict hash</p><p className="mt-2 break-all font-mono text-xs text-red-200">{verdictHash}</p></div></div>
             <div className="grid gap-3 sm:grid-cols-3">
               <button disabled={!wallet || Boolean(busy)} onClick={() => proof("Commit move", "MagicBlock ER", `GAMEMAKER_ER_MOVE:${moveHash}`)} className="h-12 rounded-lg bg-red-500 font-semibold disabled:opacity-40">Commit ER</button>
               <button disabled={!wallet || Boolean(busy)} onClick={() => proof("Log verdict", "MagicBlock ER", `GAMEMAKER_ER_VERDICT:${verdictHash}`)} className="h-12 rounded-lg border border-white/10 font-semibold disabled:opacity-40">Log Verdict</button>
               <button disabled={!wallet || Boolean(busy)} onClick={() => proof("Settle match", "Solana Devnet", `GAMEMAKER_ER_SETTLE:${duel}:${verdictHash}`)} className="h-12 rounded-lg bg-white font-semibold text-black disabled:opacity-40">Settle L1</button>
             </div>
-            <div className="rounded-lg border border-white/10"><div className="flex items-center justify-between border-b border-white/10 px-4 py-3"><p className="font-semibold">Proof timeline</p><Trophy className="h-4 w-4 text-red-300" /></div><div className="grid gap-2 p-3">{proofs.length === 0 ? <p className="py-6 text-center text-sm text-slate-500">No proof yet.</p> : proofs.map((p) => <a key={p.signature} href={explorerTx(p.signature)} target="_blank" rel="noreferrer" className="rounded-lg bg-black/20 p-3 hover:bg-black/30"><span className="flex items-center justify-between text-sm font-semibold">{p.label}<ExternalLink className="h-4 w-4" /></span><span className="mt-1 block text-xs text-slate-500">{p.route}</span><span className="mt-2 block break-all font-mono text-xs text-red-200">{p.signature}</span></a>)}</div></div>
+            <div className="rounded-lg border border-white/10"><div className="flex items-center justify-between border-b border-white/10 px-4 py-3"><p className="font-semibold">Proof timeline</p><Trophy className="h-4 w-4 text-red-300" /></div><div className="grid gap-2 p-3">{proofs.length === 0 ? <p className="py-6 text-center text-sm text-slate-500">No proof yet.</p> : proofs.map((p) => <a key={p.signature} href={explorerTx(p.signature)} target="_blank" rel="noreferrer" className="rounded-lg bg-black/20 p-3 transition hover:-translate-y-0.5 hover:bg-black/30 hover:shadow-lg hover:shadow-red-500/10"><span className="flex items-center justify-between text-sm font-semibold">{p.label}<ExternalLink className="h-4 w-4" /></span><span className="mt-1 block text-xs text-slate-500">{p.route}</span><span className="mt-2 block break-all font-mono text-xs text-red-200">{p.signature}</span></a>)}</div></div>
             {error ? <p className="rounded-lg border border-red-400/30 bg-red-400/10 p-3 text-sm text-red-100">{error}</p> : null}
           </div>
         </div>
