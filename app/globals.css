@@ -8,7 +8,18 @@
   --font-mono: var(--font-geist-mono);
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--background); color: var(--foreground); }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
 
 @keyframes arena-float {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
@@ -49,4 +60,136 @@ body { margin: 0; background: var(--background); color: var(--foreground); }
   width: 28%;
   background: linear-gradient(90deg, transparent, rgba(248,113,113,0.25), transparent);
   animation: slash 4.8s ease-in-out infinite;
+}
+
+.arena-shell {
+  background:
+    linear-gradient(115deg, rgba(239,68,68,0.16), transparent 36%),
+    linear-gradient(245deg, rgba(103,232,249,0.1), transparent 34%),
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    #090c14;
+  background-size: auto, auto, 48px 48px, auto;
+}
+
+.arena-type {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.team-logo {
+  animation: arena-float 5s ease-in-out infinite;
+  box-shadow: 0 0 0 3px rgba(248,113,113,0.16), 0 20px 44px rgba(248,113,113,0.18);
+}
+
+.scoreboard {
+  position: relative;
+}
+
+.match-clock {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.arena-floor {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(248,113,113,0.2), transparent 26%),
+    radial-gradient(circle at 50% 62%, rgba(103,232,249,0.12), transparent 28%),
+    #101726;
+  position: relative;
+}
+
+.arena-floor::before {
+  content: "";
+  position: absolute;
+  inset: 96px 8% auto;
+  height: 38%;
+  border: 1px solid rgba(255,255,255,0.09);
+  transform: perspective(700px) rotateX(58deg);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.fighter-panel,
+.arena-card,
+.duel-id,
+.referee-board {
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.24);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.fighter-panel {
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.vs-badge {
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  min-height: 120px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ef4444, #67e8f9);
+  color: #070a10;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 48px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 22px 60px rgba(248,113,113,0.22);
+}
+
+.arena-card {
+  min-height: 290px;
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.red-corner {
+  border-color: rgba(248,113,113,0.28);
+}
+
+.blue-corner {
+  border-color: rgba(103,232,249,0.26);
+}
+
+.duel-id {
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.referee-board {
+  display: grid;
+  gap: 18px;
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.arena-button {
+  min-height: 58px;
+  border-radius: 12px;
+  padding: 0 16px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.arena-button:hover:not(:disabled) {
+  transform: translateY(-4px) skewX(-3deg);
+  box-shadow: 0 16px 36px rgba(248,113,113,0.18);
+}
+
+.caster-feed {
+  background:
+    linear-gradient(180deg, rgba(248,113,113,0.12), transparent 30%),
+    #0d111c;
+}
+
+.feed-item {
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.feed-item:hover {
+  transform: translateX(4px);
+  border-color: rgba(248,113,113,0.38);
 }
