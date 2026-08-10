@@ -300,7 +300,7 @@ textarea {
   color: white;
   outline: 0;
   overflow: hidden;
-  font-size: clamp(26px, 3vw, 50px);
+  font-size: clamp(24px, 2.35vw, 42px);
   text-overflow: ellipsis;
   text-transform: uppercase;
 }
