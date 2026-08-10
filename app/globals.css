@@ -196,6 +196,8 @@ textarea {
 
 .broadcast-arena {
   position: relative;
+  --rail-width: 340px;
+  --edge: clamp(18px, 4vw, 54px);
   font-family: "Arial Black", Impact, Haettenschweiler, sans-serif;
 }
 
@@ -214,6 +216,10 @@ textarea {
   align-items: center;
   gap: 14px;
   padding: 18px clamp(18px, 4vw, 54px);
+}
+
+.broadcast-top > div:last-child {
+  justify-self: end;
 }
 
 .brand-slab,
@@ -262,17 +268,19 @@ textarea {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 180px 1fr;
+  grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr);
   align-items: center;
   gap: 18px;
-  margin: 8vh auto 0;
-  width: min(1120px, calc(100% - 32px));
+  margin: 7vh 0 0 var(--edge);
+  width: min(1120px, calc(100vw - var(--rail-width) - var(--edge) - 54px));
 }
 
 .player-red,
 .player-blue {
   display: grid;
+  min-width: 0;
   gap: 8px;
+  overflow: hidden;
   border: 1px solid rgba(255,255,255,0.18);
   background: rgba(0,0,0,0.56);
   padding: 18px;
@@ -285,11 +293,15 @@ textarea {
 .player-blue span { font-family: var(--font-geist-mono); font-size: 11px; text-transform: uppercase; }
 .player-red input,
 .player-blue input {
+  width: 100%;
+  min-width: 0;
   border: 0;
   background: transparent;
   color: white;
   outline: 0;
-  font-size: clamp(28px, 4vw, 58px);
+  overflow: hidden;
+  font-size: clamp(26px, 3vw, 50px);
+  text-overflow: ellipsis;
   text-transform: uppercase;
 }
 .player-blue input { text-align: right; }
@@ -297,10 +309,10 @@ textarea {
 .giant-vs {
   display: grid;
   place-items: center;
-  min-height: 150px;
+  min-height: 132px;
   color: #020617;
   background: linear-gradient(90deg, #ef4444, #67e8f9);
-  font-size: 70px;
+  font-size: 58px;
   transform: skewX(-8deg);
   animation: vs-hit 2.4s ease-in-out infinite;
 }
@@ -309,7 +321,7 @@ textarea {
   position: absolute;
   z-index: 2;
   left: 24px;
-  right: 380px;
+  right: calc(var(--rail-width) + 40px);
   bottom: 28px;
   display: grid;
   grid-template-columns: 1fr 1fr 0.8fr;
@@ -349,7 +361,7 @@ textarea {
   bottom: 28px;
   display: grid;
   gap: 10px;
-  width: 330px;
+  width: var(--rail-width);
 }
 .broadcast-actions button {
   min-height: 52px;
@@ -371,7 +383,7 @@ textarea {
   top: 96px;
   display: grid;
   gap: 10px;
-  width: 330px;
+  width: var(--rail-width);
   border: 1px solid rgba(255,255,255,0.14);
   background: rgba(3,7,18,0.72);
   padding: 14px;
